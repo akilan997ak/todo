@@ -18,7 +18,13 @@ use App\Http\Controllers\TaskController;
 */
 use App\Http\Controllers\AuthController;
 
+Route::get('/about', function () {
+    return Inertia::render('About');
+});
+
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+
 Route::post('/register', [AuthController::class, 'register']);
 
 

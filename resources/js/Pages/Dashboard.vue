@@ -60,7 +60,7 @@ const deleteTask = (id) => {
 };
 
 
-// Function to mark task as completed
+
 const toggleComplete = (id) => {
   axios.patch(`/tasks/${id}/complete`).then(() => {
     const task = tasks.value.find(task => task.id === id);
@@ -107,10 +107,9 @@ const addTask = () => {
 
 // Logout function to send POST request to the backend
 const logout = () => {
-  axios.post('/logout')  // Sending POST request to logout route
+  axios.post('/logout') 
     .then(response => {
-      // Redirect to home or login page after logout
-      window.location.href = '/';  // or any redirect URL you prefer
+      window.location.href = '/';  
     })
     .catch(error => {
       console.error('Error logging out:', error);
@@ -129,23 +128,27 @@ const getColorForTask = (taskId) => {
   <Head title="Dashboard" />
   
   <AuthenticatedLayout>
-    <!-- Header Section with Logo and Buttons -->
+    <div class="bg-black">
+         <!-- Header Section with Logo and Buttons -->
     <div class="flex justify-between items-center py-4 px-6">
       <img src="/assets/logo.png" alt="Logo" class="h-10" /> <!-- Replace with your logo -->
       
       <div class="flex space-x-4">
-        <!-- <button @click="goToProfile" class="px-4 py-2 bg-green-500 text-black rounded-md">Profile</button> -->
-        <!-- <button @click="logout" class="px-4 py-2 bg-red-300 text-black rounded-md">Logout</button> -->
-        <button @click="logout" class="px-4 py-2 bg-red-500 text-white rounded-md">
+    <button @click="logout" class="px-4 bg-red-500 text-white rounded-md">
       Logout
     </button>
+    <div  class="flex space-x-4">
+      <a href="/about" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 transition rounded-lg text-white font-semibold">
+        About
+      </a>
+    </div>
       </div>
     </div>
 
     <!-- Main Content Section -->
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-black overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900">
             <!-- Add New Task Form -->
             <div class="mb-6">
@@ -154,44 +157,54 @@ const getColorForTask = (taskId) => {
               <button @click="addTask" class="bg-blue-500 text-white px-4 py-2 rounded-md">Add Todo</button>
             </div>
 
-            <!-- Task List -->
-            <div v-if="tasks.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  <div v-for="task in tasks" :key="task.id" :style="{ backgroundColor: getColorForTask(task.id) }" class="relative flex flex-col justify-between p-4 rounded-lg shadow-md">
-    
-    <!-- Checkbox in the top-right corner -->
-    <input 
-      type="checkbox" 
-      v-model="task.completed" 
-      @change="toggleComplete(task.id)" 
-      class="absolute top-2 right-2"
-    />
-    
-    <!-- Title (No Line-through) -->
-    <div  class="font-bold mb-2">
-      {{ task.title }}
-    </div>
 
-    <!-- Description (Line-through if completed) -->
-    <div :class="{ 'line-through': task.completed }" class="mb-2">
-      {{ task.description }}
-    </div>
 
-    <!-- Delete Button -->
-    <button @click="deleteTask(task.id)" class="bg-red-500 text-white px-4 py-2 rounded-md self-start">
-      Delete
-    </button>
+ <div v-if="tasks.length > 0" class="flex flex-wrap gap-4 justify-center">
+  <!-- Loop through each task to create a card -->
+  <div v-for="(task, index) in tasks" 
+       :key="task.id" 
+       :style="{ backgroundColor: getColorForTask(task.id) }"  
+       class="shadow-md h-auto min-h-[150px] border border-gray-300 rounded-lg min-w-[250px] max-w-[250px] w-full sm:w-[250px] flex-grow">
+    
+    <!-- Card content with dynamic height based on content -->
+    <div class="relative flex flex-col p-4 shadow-md h-auto min-h-[150px] min-w-[250px] max-w-[250px] border rounded-lg">
+      
+      <!-- Checkbox in the top-right corner -->
+      <input 
+        type="checkbox" 
+        v-model="task.completed" 
+        @change="toggleComplete(task.id)" 
+        class="absolute top-2 right-2"
+      />
+      
+      <!-- Title (No Line-through) -->
+      <div class="font-bold mb-2">
+        {{ task.title }}
+      </div>
+
+      <!-- Description (Line-through if completed) -->
+      <div :class="{ 'line-through': task.completed }" class="mb-2 w-full break-words">
+        {{ task.description }}
+      </div>
+
+      <!-- Delete Button -->
+      <button @click="deleteTask(task.id)" class="bg-red-500 text-white px-4 py-2 rounded-md">
+        Delete
+      </button>
+    </div>
   </div>
 </div>
-
-
             <!-- No tasks message -->
-            <div v-else class="text-center text-gray-500">
+            <div v-else class="text-center text-white">
               <p>No tasks available. Add a new task!</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    </div>
+ 
   </AuthenticatedLayout>
 </template>
 

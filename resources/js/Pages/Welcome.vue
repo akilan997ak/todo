@@ -34,7 +34,7 @@ onMounted(() => {
     setTimeout(() => {
         showLogo.value = false;
         window.location.href = route('login');  // Redirect to the login page
-    }, 5000);  // Set timeout to 5 seconds
+    }, 500);  // Set timeout to 5 seconds
 });
 </script>
 
