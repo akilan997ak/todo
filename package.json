@@ -20,6 +20,7 @@
     "dependencies": {
         "@vueuse/motion": "^2.2.6",
         "lottie-web": "^5.12.2",
-        "motion": "^12.4.10"
+        "motion": "^12.4.10",
+        "swiper": "^11.2.5"
     }
 }
